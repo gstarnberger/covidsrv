@@ -1,8 +1,9 @@
-package org.sysfrog;
+package org.sysfrog.covidsrv;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.sysfrog.covidsrv.db.MessageDB;
 
 public class CovidSrvApplication extends Application<CovidSrvConfiguration> {
 
@@ -23,7 +24,8 @@ public class CovidSrvApplication extends Application<CovidSrvConfiguration> {
     @Override
     public void run(final CovidSrvConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        final MessageDB messageDB = new MessageDB();
+        final CovidSrvResource covidSrvResource = new CovidSrvResource(messageDB);
+        environment.jersey().register(covidSrvResource);
     }
-
 }
